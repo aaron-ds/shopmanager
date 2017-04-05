@@ -47,20 +47,26 @@ public class ShopManagerImpl implements ShopManager {
         return closest;
     }
 
-    private void getAndUpdateLocation(Shop shop) {
+    protected void getAndUpdateLocation(Shop shop) {
         executorService.execute( () -> {
             Location location = locationService.findLocation(shop.getShopAddress().getPostCode());
             if (location != null) {
                 Address address = shop.getShopAddress();
-                address.setLocation(location);
-                Shop shopWithLocation = new Shop(shop.getShopName(), address);
+//                address.setLocation(location);
+                Address newAddress = new Address(address.getNumber(), address.getPostCode());
+                newAddress.setLocation(location);
+                Shop shopWithLocation = new Shop(shop.getShopName(), newAddress);
                 shopStore.replace(shop.getShopName(), shop, shopWithLocation);
             }
         });
     }
 
-    public Shop getShop(String shopName) {
+    protected Shop getShop(String shopName) {
         return shopStore.get(shopName);
+    }
+
+    protected Shop putShop(Shop shop) {
+        return shopStore.put(shop.getShopName(), shop);
     }
 
 }

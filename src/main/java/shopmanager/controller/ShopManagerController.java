@@ -1,7 +1,5 @@
 package shopmanager.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +10,7 @@ import shopmanager.ShopManager;
 import shopmanager.model.Location;
 import shopmanager.model.Shop;
 
+import static java.util.Objects.requireNonNull;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -28,14 +27,17 @@ public class ShopManagerController {
 
     @RequestMapping(method=POST, name="/shop", produces = "application/json")
     public Shop handleCreateShop(@RequestBody Shop shop) {
-        //requires some validation on input
+        requireNonNull(shop);
+
         Shop existingShop = shopManager.addShop(shop);
         return existingShop;
     }
 
     @RequestMapping(method=GET, name="/shop")
     public Shop handleFindNearestShop(@RequestParam("lat") String latitude, @RequestParam("long") String longitude) {
-        //requires some validation on input
+        requireNonNull(latitude);
+        requireNonNull(longitude);
+
         Shop shop = shopManager.findClosestShop(new Location(Double.valueOf(latitude), Double.valueOf(longitude)));
         return shop;
     }

@@ -2,10 +2,18 @@ package shopmanager.model;
 
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
 public class LocationTest {
 
+
+    @Test
+    public void testGetLatitude() {
+        Location location = new Location(1.1234, 5.6789);
+        assertEquals(1.1234, location.getLatitude());
+        assertEquals(5.6789, location.getLongitude());
+    }
 
     @Test
     public void testDistanceBetweenLocations() {
@@ -17,4 +25,5 @@ public class LocationTest {
         //distance according to Google maps is ~2.2 miles
         assertTrue(distance > 2.1 && distance < 2.3);
     }
+
 }
