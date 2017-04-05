@@ -2,6 +2,7 @@ package shopmanager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.google.maps.GeoApiContext;
@@ -19,15 +20,8 @@ public class GoogleLocationService implements LocationService {
 
     private static final Logger log = LoggerFactory.getLogger(GoogleLocationService.class);
 
-    @Value("${google.apikey}")
-    private String apiKey;
+    @Autowired
     GeoApiContext context;
-
-
-    @PostConstruct
-    public void init() {
-        context = new GeoApiContext().setApiKey(apiKey);
-    }
 
     @Override
     public Location findLocation(String postCode) {

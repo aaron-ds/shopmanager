@@ -1,5 +1,7 @@
 package shopmanager;
 
+import com.google.maps.GeoApiContext;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -17,5 +19,10 @@ public class Application {
     @Bean
     public ExecutorService executorService() {
         return Executors.newCachedThreadPool();
+    }
+
+    @Bean
+    public GeoApiContext geoApiContext(@Value("${google.apikey}") String apikey) {
+        return new GeoApiContext().setApiKey(apikey);
     }
 }
