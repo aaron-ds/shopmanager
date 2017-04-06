@@ -52,7 +52,6 @@ public class ShopManagerImpl implements ShopManager {
             Location location = locationService.findLocation(shop.getShopAddress().getPostCode());
             if (location != null) {
                 Address address = shop.getShopAddress();
-//                address.setLocation(location);
                 Address newAddress = new Address(address.getNumber(), address.getPostCode());
                 newAddress.setLocation(location);
                 Shop shopWithLocation = new Shop(shop.getShopName(), newAddress);

@@ -66,6 +66,12 @@ public class Shop {
             this.postCode = postCode;
         }
 
+        public Address(int number, String postCode, Location location) {
+            this.number = number;
+            this.postCode = postCode;
+            this.location = location;
+        }
+
         public int getNumber() {
             return number;
         }

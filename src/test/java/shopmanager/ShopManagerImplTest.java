@@ -12,6 +12,9 @@ import shopmanager.model.Location;
 import shopmanager.model.Shop;
 import shopmanager.model.Shop.Address;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 import static org.junit.Assert.assertEquals;
@@ -132,6 +135,24 @@ public class ShopManagerImplTest {
         } else {
             throw new AssertionError();
         }
+    }
+
+    @Test
+    public void testClosestShopIsReturned() {
+        shopManager.putShop(new Shop("A shop", new Shop.Address(1, "N1 1NN", new Location(1.1, 2.2))));
+        shopManager.putShop(new Shop("Another shop", new Shop.Address(2, "E1 1NN", new Location(10.1, 2.2))));
+        shopManager.putShop(new Shop("One more shop", new Shop.Address(3, "W1 1NN", new Location(30.1, 2.2))));
+
+        Shop closest;
+
+        closest = shopManager.findClosestShop(new Location(1.2, 2.2));
+        assertEquals("A shop", closest.getShopName());
+
+        closest = shopManager.findClosestShop(new Location(9.9, 2.2));
+        assertEquals("Another shop", closest.getShopName());
+
+        closest = shopManager.findClosestShop(new Location(31.2, 2.2));
+        assertEquals("One more shop", closest.getShopName());
     }
 
 }
